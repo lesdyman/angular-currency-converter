@@ -1,0 +1,87 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-icons {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  font-size: 16px;
+}
+
+.header-currency-icon {
+  height: 25px;
+  border-radius: 5px;
+  
+}
+
+.converter-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: #B4B4B8;
+}
+
+.converter {
+  width: 800px;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: aliceblue;
+  box-shadow: 10px 5px 20px #E3E1D9;
+}
+
+.converter-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.converter-title {
+  margin: 0;
+  line-height: 40px;
+  font-size: 24px;
+  text-align: center;
+}
+
+.converter-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.input-field {
+  width: 100%;
+  line-height: 40px;
+  font-size: 24px;
+  border: none;
+  border-radius: 5px;
+  padding-left: 5px;
+}
+
+.calculate-button {
+  width: 300px;
+}
