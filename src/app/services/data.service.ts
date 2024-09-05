@@ -7,7 +7,7 @@ import { Currency } from '../types/currency';
   providedIn: 'root'
 })
 export class DataService {
-  private url = `https://cors-anywhere.herokuapp.com/https://bank.gov.ua/NBU_Exchange/exchange?json`;
+  private url = `https://bank.gov.ua/NBU_Exchange/exchange?json`;
 
   constructor(private http: HttpClient) {}
 
