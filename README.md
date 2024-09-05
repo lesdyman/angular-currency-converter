@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2 as a pet project using open API from [National Bank of Ukraine](https://bank.gov.ua/NBU_Exchange/exchange?json).
 
+### Please, check out the [DEMOLINK](https://angular-currency-converter-8zkj.vercel.app/)
+
 ##Project uses following technologies:
 - Angular 18.2.2
 - Angular Material
