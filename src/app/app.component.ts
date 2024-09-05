@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
-import { MatOption, MatSelect } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
-import { MatToolbar } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { DataService } from './services/data.service';
 import { CommonModule } from '@angular/common';
 import { Money } from './types/money';
@@ -17,13 +17,11 @@ import { Money } from './types/money';
     CommonModule,
     RouterOutlet,
     MatCardModule,
-    MatFormField,
-    MatLabel,
-    MatSelect,
-    MatOption,
+    MatFormFieldModule,
+    MatSelectModule,
     MatButtonModule,
-    MatIcon,
-    MatToolbar,
+    MatIconModule,
+    MatToolbarModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
@@ -49,10 +47,13 @@ export class AppComponent {
     this.dataService.getExchangeRates().subscribe((data) => {
       this.currencies = data
         .filter((rate) => this.requiredCurrencis.includes(rate.CurrencyCodeL))
-        .reduce((acc, rate) => {
-          acc[rate.CurrencyCodeL] = Math.round(rate.Amount * 10) / 10;
-          return acc;
-        }, {} as Money);
+        .reduce(
+          (acc, rate) => {
+            acc[rate.CurrencyCodeL] = Math.round(rate.Amount * 10) / 10;
+            return acc;
+          },
+          { UAH: 1 } as Money
+        );
     });
   }
 
@@ -60,82 +61,75 @@ export class AppComponent {
     return Object.keys(this.currencies);
   }
 
-  handleFromCurrencyChange(value: string) {
-    this.fromCurrency = value;
-    this.convertFromToCurrency();
-  }
-
-  handleToCurrencyChange(value: string) {
-    this.toCurrency = value;
-    this.convertFromToCurrency();
-  }
-
-  handleFromValueInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input) {
-      const cleanedValue = input.value.replace(/[^0-9.]/g, '');
-      const normalizedValue = cleanedValue.split('.').length > 2
-        ? cleanedValue.slice(0, cleanedValue.indexOf('.', cleanedValue.indexOf('.') + 1))
-        : cleanedValue;
-
-      this.fromValue = normalizedValue === '' ? null : parseFloat(normalizedValue);
-      input.value = normalizedValue;
-
-      this.convertFromToCurrency();
+  handleCurrencyChange(type: 'from' | 'to', value: string) {
+    if (type === 'from') {
+      this.fromCurrency = value;
+      this.convertCurrency('toFrom');
+    } else {
+      this.toCurrency = value;
+      this.convertCurrency('fromTo');
     }
   }
 
-  handleToValueInput(event: Event) {
+  normalizeInput(value: string): string {
+    const cleanedValue = value.replace(/[^0-9.]/g, '');
+    return cleanedValue.split('.').length > 2
+      ? cleanedValue.slice(
+          0,
+          cleanedValue.indexOf('.', cleanedValue.indexOf('.') + 1)
+        )
+      : cleanedValue;
+  }
+
+  handleValueInput(type: 'from' | 'to', event: Event) {
     const input = event.target as HTMLInputElement;
     if (input) {
-      const cleanedValue = input.value.replace(/[^0-9.]/g, '');
-      const normalizedValue = cleanedValue.split('.').length > 2
-        ? cleanedValue.slice(0, cleanedValue.indexOf('.', cleanedValue.indexOf('.') + 1))
-        : cleanedValue;
+      const normalizedValue = this.normalizeInput(input.value);
+      const value = normalizedValue === '' ? null : parseFloat(normalizedValue);
 
-      this.toValue = normalizedValue === '' ? null : parseFloat(normalizedValue);
+      if (type === 'from') {
+        this.fromValue = value;
+        this.convertCurrency('fromTo');
+      } else {
+        this.toValue = value;
+        this.convertCurrency('toFrom');
+      }
+
       input.value = normalizedValue;
-
-      this.convertToFromCurrency();
     }
   }
 
-  convertFromToCurrency() {
-    if (this.fromCurrency && this.toCurrency && this.fromValue !== null) {
+  convertCurrency(direction: 'fromTo' | 'toFrom') {
+    if (this.fromCurrency && this.toCurrency) {
       const fromCurrencyPrice = this.currencies[this.fromCurrency];
       const toCurrencyPrice = this.currencies[this.toCurrency];
 
       if (fromCurrencyPrice && toCurrencyPrice) {
-        const exchangeRate = fromCurrencyPrice / toCurrencyPrice;
-        this.toValue = Math.floor(this.fromValue * exchangeRate * 100) / 100;
+        if (direction === 'fromTo' && this.fromValue !== null) {
+          const exchangeRate = fromCurrencyPrice / toCurrencyPrice;
+          this.toValue = Math.floor(this.fromValue * exchangeRate * 100) / 100;
+        } else if (direction === 'toFrom' && this.toValue !== null) {
+          const exchangeRate = toCurrencyPrice / fromCurrencyPrice;
+          this.fromValue = Math.floor(this.toValue * exchangeRate * 100) / 100;
+        } else {
+          this.resetValues();
+        }
       } else {
-        this.toValue = null;
+        this.resetValues();
       }
     } else {
-      this.toValue = null;
+      this.resetValues();
     }
   }
 
-  convertToFromCurrency() {
-    if (this.fromCurrency && this.toCurrency && this.toValue !== null) {
-      const fromCurrencyPrice = this.currencies[this.fromCurrency];
-      const toCurrencyPrice = this.currencies[this.toCurrency];
-
-      if (fromCurrencyPrice && toCurrencyPrice) {
-        const exchangeRate = toCurrencyPrice / fromCurrencyPrice;
-        this.fromValue = Math.floor(this.toValue * exchangeRate * 100) / 100;
-      } else {
-        this.fromValue = null;
-      }
-    } else {
-      this.fromValue = null;
-    }
+  resetValues() {
+    this.fromValue = null;
+    this.toValue = null;
   }
 
   handleReset() {
+    this.resetValues();
     this.fromCurrency = null;
     this.toCurrency = null;
-    this.fromValue = null;
-    this.toValue = null;
   }
 }

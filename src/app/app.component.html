@@ -22,7 +22,7 @@
         <div class="form-group">
           <mat-form-field class="form-field">
             <mat-label>Choose currency:</mat-label>
-            <mat-select [(value)]="fromCurrency" (selectionChange)="handleFromCurrencyChange($event.value)">
+            <mat-select [(value)]="fromCurrency" (selectionChange)="handleCurrencyChange('from', $event.value)">
               <mat-option [value]="null">None</mat-option>
               <mat-option *ngFor="let currency of currencyKeys" [value]="currency">
                 {{ currency }}
@@ -33,7 +33,7 @@
             class="input-field" 
             type="text" 
             placeholder="Enter value"
-            (input)="handleFromValueInput($event)"
+            (input)="handleValueInput('from', $event)"
             [value]="fromValue !== null ? fromValue : ''"
           >
         </div>
@@ -41,7 +41,7 @@
         <div class="form-group">
           <mat-form-field class="form-field">
             <mat-label>Choose currency:</mat-label>
-            <mat-select [(value)]="toCurrency" (selectionChange)="handleToCurrencyChange($event.value)">
+            <mat-select [(value)]="toCurrency" (selectionChange)="handleCurrencyChange('to', $event.value)">
               <mat-option [value]="null">None</mat-option>
               <mat-option *ngFor="let currency of currencyKeys" [value]="currency">
                 {{ currency }}
@@ -51,9 +51,9 @@
           <input 
             class="input-field" 
             type="text" 
-            placeholder="Converted value"
+            placeholder="Enter value"
             [value]="toValue !== null ? toValue : ''"
-            (input)="handleToValueInput($event)"
+            (input)="handleValueInput('to', $event)"
           >
         </div>
       </div>
