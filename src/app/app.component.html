@@ -1,15 +1,4 @@
-<mat-toolbar class="header">
-  <div class="header-icons">
-    <img class="header-currency-icon" src="/assets/eu.svg" alt="euro">
-    <span>{{ currencies['EUR'] }} ₴</span>
-    <img class="header-currency-icon" src="/assets/us.svg" alt="dollar">
-    <span>{{ currencies['USD'] }} ₴</span>
-    <img class="header-currency-icon" src="/assets/poland.svg" alt="zloty">
-    <span>{{ currencies['PLN'] }} ₴</span>
-  </div>
-  <span class="example-spacer"></span>
-</mat-toolbar>
-
+<app-header [currencies]="currencies"></app-header>
 <div class="converter-wrapper">
   <mat-card class="converter">
     <div class="converter-top">

@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-icons {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  font-size: 16px;
+}
+
+.header-currency-icon {
+  height: 25px;
+  border-radius: 5px;
+  
+}
