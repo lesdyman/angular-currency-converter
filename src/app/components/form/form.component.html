@@ -1,0 +1,19 @@
+<div class="form-group">
+  <mat-form-field class="form-field">
+    <mat-label>Choose currency:</mat-label>
+    <mat-select [(value)]="selectedCurrency" (selectionChange)="onCurrencyChange($event)">
+      <mat-option [value]="null">None</mat-option>
+      <mat-option *ngFor="let currency of currencies" [value]="currency">
+        {{ currency }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <input 
+    class="input-field" 
+    type="text" 
+    [placeholder]="placeholder"
+    (input)="onValueInput($event)"
+    [value]="value !== null ? value : ''"
+  >
+</div>

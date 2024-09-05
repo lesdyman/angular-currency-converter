@@ -9,7 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { DataService } from './services/data.service';
 import { CommonModule } from '@angular/common';
 import { Money } from './types/money';
-import { HeaderComponent } from "./components/header/header.component";
+import { HeaderComponent } from './components/header/header.component';
 
 @Component({
   selector: 'app-root',
@@ -23,8 +23,8 @@ import { HeaderComponent } from "./components/header/header.component";
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
-    HeaderComponent
-],
+    HeaderComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
