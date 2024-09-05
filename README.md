@@ -1,6 +1,17 @@
 # AngularCurrencyCalculator
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2 as a pet project using open API from [National Bank of Ukraine](https://bank.gov.ua/NBU_Exchange/exchange?json).
+
+##Project uses following technologies:
+- Angular 18.2.2
+- Angular Material
+- CSS3
+
+## How to use:
+- The interface is quite simple. Just select the currency to convert and the currency you want to receive and write down an amount in fild bellow. There shall be result in another fild;
+- Conversion works in both directions, so it doesn't matter which side is the source of the currency and which is the result;
+
+# Angular instructions:
 
 ## Development server
 
@@ -13,14 +24,6 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
 ## Further help
 
